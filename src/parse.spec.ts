@@ -67,6 +67,17 @@ describe("parse(string)", function () {
     });
   });
 
+  it("should parse a type with charset parameter", function () {
+    const type = parse("text/html; charset=utf-8");
+    assert.deepEqual(type, {
+      type: "text/html",
+      index: 24,
+      parameters: {
+        charset: "utf-8",
+      },
+    });
+  });
+
   it("should parse parameters", function () {
     const type = parse("text/html; charset=utf-8; foo=bar");
     assert.deepEqual(type, {
