@@ -91,6 +91,17 @@ describe("parse(string)", function () {
     });
   });
 
+  it("should parse multipart/form-data boundary", function () {
+    const type = parse("multipart/form-data; boundary=abc123");
+    assert.deepEqual(type, {
+      type: "multipart/form-data",
+      index: 36,
+      parameters: {
+        boundary: "abc123",
+      },
+    });
+  });
+
   it("should parse empty parameter value", function () {
     const type = parse("text/html; charset=");
     assert.deepEqual(type, {
