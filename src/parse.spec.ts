@@ -58,6 +58,17 @@ describe("parse(string)", function () {
     });
   });
 
+  it("should parse type with suffix and parameters", function () {
+    const type = parse("application/problem+json; charset=utf-8");
+    assert.deepEqual(type, {
+      type: "application/problem+json",
+      index: 39,
+      parameters: {
+        charset: "utf-8",
+      },
+    });
+  });
+
   it("should parse basic type with surrounding OWS", function () {
     const type = parse(" text/html ");
     assert.deepEqual(type, {
