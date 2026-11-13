@@ -1,5 +1,5 @@
 import { describe, it, assert } from "vitest";
-import { parse } from "./index.js";
+import { format, parse } from "./index.js";
 
 const invalidTypes = [
   " ",
@@ -248,6 +248,13 @@ describe("parse(string)", function () {
       index: 21,
       parameters: {},
     });
+  });
+
+  it("should round-trip quoted parameter values through format", function () {
+    const type = parse('text/plain; foo="bar baz"');
+    assert.strictEqual(type.type, "text/plain");
+    assert.deepEqual({ ...type.parameters }, { foo: "bar baz" });
+    assert.strictEqual(format(type), 'text/plain; foo="bar baz"');
   });
 
   it("should parse and ignore non-OWS after closing quote", function () {
