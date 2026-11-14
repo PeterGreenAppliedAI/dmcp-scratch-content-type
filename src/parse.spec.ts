@@ -222,6 +222,18 @@ describe("parse(string)", function () {
     });
   });
 
+  it("should keep a semicolon inside a quoted parameter value", function () {
+    const type = parse('text/html; foo="a;b"; charset=utf-8');
+    assert.deepEqual(type, {
+      type: "text/html",
+      index: 35,
+      parameters: {
+        foo: "a;b",
+        charset: "utf-8",
+      },
+    });
+  });
+
   it("should ignore extra semicolons", function () {
     const type = parse("text/html;;;; charset=utf-8;; foo=bar;");
     assert.deepEqual(type, {
